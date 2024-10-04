@@ -39,7 +39,7 @@ export const Ship = () => {
 	}, [x, keyListener]);
 
 	return (
-		<Container sortableChildren x={x} y={750}>
+		<Container name='Ship' sortableChildren x={x} y={750}>
 			<Sprite image='/ship/base.png' zIndex={3} anchor={0.5} />
 			<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
 			{!!frames.length && (
