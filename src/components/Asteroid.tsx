@@ -1,11 +1,27 @@
 import type { Resource } from "pixi.js";
+import type { PixiRef } from "@pixi/react";
 
-import { AnimatedSprite, PixiRef, useTick } from "@pixi/react";
+import { AnimatedSprite, Graphics, useTick } from "@pixi/react";
 import { Texture } from "pixi.js";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { useAtom } from "jotai";
+
 import { config } from "../config";
 import { isGameOver } from "../atoms/game.atom";
-import { useAtom } from "jotai";
+
+function draw(g: any) {
+	g.beginFill(0xff3300, 0.4);
+
+	g.moveTo(-19, -16);
+	g.lineTo(19, -16);
+	g.lineTo(19, 16);
+	g.lineTo(-19, 16);
+	g.endFill();
+}
+
+export const Hitbox = forwardRef(({ name, x, y }: { name: string; x: number; y: number }, ref: any) => (
+	<Graphics ref={ref} name={name} draw={draw} x={x} y={y} visible={false} />
+));
 
 interface Props {
 	name: string;
@@ -66,19 +82,21 @@ export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 	}
 
 	return (
-		<AnimatedSprite
-			ref={ref}
-			name={name}
-			eventMode='static'
-			animationSpeed={0.1}
-			isPlaying={isExploding}
-			textures={frames}
-			x={x}
-			y={y}
-			anchor={{ x: 0.5, y: 0.5 }}
-			rotation={rotation}
-			zIndex={20}
-			onFrameChange={handleExplosion}
-		/>
+		<>
+			<Hitbox name={name} x={x} y={y} />
+			<AnimatedSprite
+				ref={ref}
+				eventMode='static'
+				animationSpeed={0.1}
+				isPlaying={isExploding}
+				textures={frames}
+				x={x}
+				y={y}
+				anchor={{ x: 0.5, y: 0.5 }}
+				rotation={rotation}
+				zIndex={20}
+				onFrameChange={handleExplosion}
+			/>
+		</>
 	);
 };

@@ -1,5 +1,5 @@
-import { AnimatedSprite, Sprite, Container, useTick } from "@pixi/react";
-import { useCallback, useEffect, useState } from "react";
+import { AnimatedSprite, Sprite, Container, useTick, Graphics } from "@pixi/react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import { Resource, Texture } from "pixi.js";
 import { config } from "../config";
 import { isGameOver } from "../atoms/game.atom";
@@ -7,7 +7,19 @@ import { useAtom } from "jotai";
 
 const shipSize = 48;
 
-export const Ship = ({ destroyed }: { destroyed: boolean }) => {
+function draw(g: any) {
+	g.beginFill(0x07f72f, 0.4);
+
+	g.moveTo(-15, -13);
+	g.lineTo(15, -13);
+	g.lineTo(15, 13);
+	g.lineTo(-15, 13);
+	g.endFill();
+}
+
+export const Hitbox = forwardRef((_, ref: any) => <Graphics ref={ref} draw={draw} visible={false} />);
+
+export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any) => {
 	const [frames, setFrames] = useState<Array<Texture<Resource>>>([]);
 	const [x, setX] = useState(config.canvas.width / 2);
 	const [rotation, setRotation] = useState(0);
@@ -53,7 +65,8 @@ export const Ship = ({ destroyed }: { destroyed: boolean }) => {
 	});
 
 	return (
-		<Container name='Ship' sortableChildren x={x} y={750} rotation={rotation}>
+		<Container sortableChildren x={x} y={750} rotation={rotation}>
+			<Hitbox ref={ref} />
 			<Sprite image={`/ship/${gameOver ? "damaged" : "base"}.png`} zIndex={3} anchor={0.5} />
 			<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
 			{!gameOver && !!frames.length && (
@@ -61,4 +74,4 @@ export const Ship = ({ destroyed }: { destroyed: boolean }) => {
 			)}
 		</Container>
 	);
-};
+});
