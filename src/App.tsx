@@ -1,17 +1,17 @@
-import { Container, PixiRef, Stage, useTick } from "@pixi/react";
+import { Container, PixiRef, Sprite, Stage, useTick } from "@pixi/react";
 
 import { Ship } from "./components/Ship";
 import { Background } from "./components/Background";
 
 import { config } from "./config";
-import { Asteroid } from "./components/Asteroid";
 import { useRef, useState } from "react";
-import { Ruler } from "./components/Ruler";
 import { AsteroidBelt } from "./components/AsteroidBelt";
+import { isGameOver } from "./atoms/game.atom";
+import { useAtom } from "jotai";
 
-function XYZ() {
+function Scene() {
 	const ref = useRef(null);
-	const [colliding, setColliding] = useState(false);
+	const [collidingAsteroids, setCollidingAsteroids] = useState<Array<string>>([]);
 
 	useTick(() => {
 		if (ref.current) {
@@ -23,11 +23,10 @@ function XYZ() {
 				// check collision
 				const shipBounds = ship.getBounds();
 
-				const asteroids = (asteroidBelt.children?.filter((c: any) => c.name === "Asteroid") ?? []) as Array<
+				const asteroids = (asteroidBelt.children?.filter((c: any) => c.name.startsWith("Asteroid")) ?? []) as Array<
 					PixiRef<typeof Container>
 				>;
 
-				let anyColliding = false;
 				for (const asteroid of asteroids) {
 					const asteroidBounds = asteroid.getBounds();
 
@@ -38,31 +37,42 @@ function XYZ() {
 						shipBounds.y + shipBounds.height > asteroidBounds.y;
 
 					if (isColliding) {
-						anyColliding = true;
-						break;
+						setCollidingAsteroids((prev) => {
+							const unique = [...new Set([...prev, asteroid.name!])];
+							return unique;
+						});
+					} else {
+						setCollidingAsteroids((prev) => prev.filter((name) => name !== asteroid.name!));
 					}
 				}
-				setColliding(anyColliding);
 			}
 		}
 	});
 
 	return (
 		<Container ref={ref}>
-			<Ship />
-			<AsteroidBelt />
-
-			{colliding && <Ruler />}
+			<Ship destroyed={!!collidingAsteroids.length} />
+			<AsteroidBelt collidingAsteroids={collidingAsteroids} setCollidingAsteroids={setCollidingAsteroids} />
 		</Container>
 	);
 }
 
 const App = () => {
+	const [gameOver] = useAtom(isGameOver);
 	return (
 		<Stage width={config.canvas.width} height={config.canvas.height} options={{ background: 0x1099bb }}>
 			<Background />
 
-			<XYZ />
+			<Scene />
+			{gameOver && (
+				<Sprite
+					image='/game_over.png'
+					x={config.canvas.width / 2}
+					y={config.canvas.height / 2}
+					anchor={0.5}
+					scale={3}
+				/>
+			)}
 		</Stage>
 	);
 };

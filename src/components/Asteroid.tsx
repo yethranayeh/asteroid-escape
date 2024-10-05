@@ -4,20 +4,31 @@ import { AnimatedSprite, PixiRef, useTick } from "@pixi/react";
 import { Texture } from "pixi.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { config } from "../config";
+import { isGameOver } from "../atoms/game.atom";
+import { useAtom } from "jotai";
 
-export const Asteroid = ({ isExploding, x, handleRemove }: { isExploding: boolean; x: number; handleRemove: any }) => {
+interface Props {
+	name: string;
+	isExploding: boolean;
+	x: number;
+	handleRemove: any;
+}
+
+export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 	const [frames, setFrames] = useState<Array<Texture<Resource>>>([]);
-	const [visible, setVisible] = useState(true);
 	const [y, setY] = useState(0);
 	const [rotation, setRotation] = useState(0);
 	const ref = useRef<PixiRef<typeof AnimatedSprite>>(null);
 	const direction = useRef(Math.round(Math.random()));
+	const [_, setIsGameOver] = useAtom(isGameOver);
 
 	const handleExplosion = useCallback(
 		(currentFrame: number) => {
-			if (isExploding && currentFrame === 6) {
-				setVisible(false);
-				handleRemove();
+			if (isExploding) {
+				setIsGameOver(true);
+				if (currentFrame === 6) {
+					handleRemove();
+				}
 			}
 		},
 		[isExploding]
@@ -44,21 +55,20 @@ export const Asteroid = ({ isExploding, x, handleRemove }: { isExploding: boolea
 		const asteroidSpriteHeight = ref?.current?.height ?? 0;
 
 		if (y + 1 > config.canvas.height + asteroidSpriteHeight) {
-			setVisible(false);
 			handleRemove();
 		} else {
 			setY((y) => y + 1);
 		}
 	});
 
-	if (frames.length === 0 || !visible) {
+	if (frames.length === 0) {
 		return null;
 	}
 
 	return (
 		<AnimatedSprite
 			ref={ref}
-			name='Asteroid'
+			name={name}
 			eventMode='static'
 			animationSpeed={0.1}
 			isPlaying={isExploding}
