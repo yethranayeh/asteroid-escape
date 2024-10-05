@@ -6,8 +6,9 @@ import { Background } from "./components/Background";
 import { config } from "./config";
 import { useRef, useState } from "react";
 import { AsteroidBelt } from "./components/AsteroidBelt";
-import { isGameOver } from "./atoms/game.atom";
+import { gameSession, isGameOver } from "./atoms/game.atom";
 import { useAtom } from "jotai";
+import { RestartButton } from "./components/ui/buttons/RestartButton";
 
 function Scene() {
 	const ref = useRef(null);
@@ -59,19 +60,23 @@ function Scene() {
 
 const App = () => {
 	const [gameOver] = useAtom(isGameOver);
+	const [session] = useAtom(gameSession);
 	return (
-		<Stage width={config.canvas.width} height={config.canvas.height} options={{ background: 0x1099bb }}>
+		<Stage key={session} width={config.canvas.width} height={config.canvas.height} options={{ background: 0x1099bb }}>
 			<Background />
 
 			<Scene />
 			{gameOver && (
-				<Sprite
-					image='/game_over.png'
-					x={config.canvas.width / 2}
-					y={config.canvas.height / 2}
-					anchor={0.5}
-					scale={3}
-				/>
+				<>
+					<Sprite
+						image='/game_over.png'
+						x={config.canvas.width / 2}
+						y={config.canvas.height / 2}
+						anchor={0.5}
+						scale={3}
+					/>
+					<RestartButton />
+				</>
 			)}
 		</Stage>
 	);
