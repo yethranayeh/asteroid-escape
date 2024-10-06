@@ -4,6 +4,6 @@ export const config = {
 		height: 800
 	},
 	game: {
-		finalDistance: 1
+		finalDistance: 10
 	}
 };

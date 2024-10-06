@@ -10,6 +10,7 @@ export function DistanceToGoal() {
 	const [distanceTraveled] = useAtom(shipAtom.distanceTraveled);
 	const [y, setY] = useState(15);
 	const setIsFinished = useAtom(gameAtom.isFinished)[1];
+	const setTravelSpeed = useAtom(shipAtom.travelSpeed)[1];
 
 	const remainingDistance = config.game.finalDistance - distanceTraveled;
 
@@ -21,6 +22,7 @@ export function DistanceToGoal() {
 	useEffect(() => {
 		if (remainingDistance <= 0.01) {
 			setIsFinished(true);
+			setTravelSpeed(1);
 		}
 	}, [remainingDistance]);
 
