@@ -1,6 +1,8 @@
-import { Sprite, Container, useTick } from "@pixi/react";
+import { Sprite, useTick } from "@pixi/react";
+import { Container } from "@pixi/react-animated";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import { useAtom } from "jotai";
+import { Spring } from "react-spring";
 
 import { config } from "../../config";
 import { isGameOver } from "../../atoms/game.atom";
@@ -15,7 +17,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 	const [x, setX] = useState(config.canvas.width / 2);
 	const [rotation, setRotation] = useState(0);
 	const [gameOver] = useAtom(isGameOver);
-	const setTravelSpeed = useAtom(shipAtom.travelSpeed)[1];
+	const [travelSpeed, setTravelSpeed] = useAtom(shipAtom.travelSpeed);
 
 	const keyDownListener = useCallback(
 		(e: KeyboardEvent) => {
@@ -67,11 +69,17 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 	});
 
 	return (
-		<Container sortableChildren x={x} y={750} rotation={rotation}>
-			<Hitbox ref={ref} />
-			<Sprite image={`/ship/${gameOver ? "damaged" : "base"}.png`} zIndex={3} anchor={0.5} />
-			<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
-			<Engine />
-		</Container>
+		<Spring from={{ x, y: 750 }} to={{ x, y: travelSpeed > 1 ? 650 : 750 }}>
+			{(props) => {
+				return (
+					<Container sortableChildren {...props} rotation={rotation}>
+						<Hitbox ref={ref} />
+						<Sprite image={`/ship/${gameOver ? "damaged" : "base"}.png`} zIndex={3} anchor={0.5} />
+						<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
+						<Engine />
+					</Container>
+				);
+			}}
+		</Spring>
 	);
 });
