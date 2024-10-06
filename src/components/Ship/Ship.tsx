@@ -7,6 +7,7 @@ import { Spring } from "react-spring";
 import { config } from "../../config";
 import { gameAtom } from "../../atoms/game.atom";
 import { shipAtom } from "../../atoms/ship.atom";
+import { getDistanceTraveled } from "./utils/getDistanceTraveled";
 
 import { Hitbox } from "./Hitbox";
 import { Engine } from "./Engine";
@@ -18,6 +19,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 	const [rotation, setRotation] = useState(0);
 	const [isGameOver] = useAtom(gameAtom.isOver);
 	const [travelSpeed, setTravelSpeed] = useAtom(shipAtom.travelSpeed);
+	const setDistanceTraveled = useAtom(shipAtom.distanceTraveled)[1];
 
 	const keyDownListener = useCallback(
 		(e: KeyboardEvent) => {
@@ -62,10 +64,12 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 		};
 	}, [x, keyDownListener, destroyed, isGameOver]);
 
-	useTick(() => {
+	useTick((delta) => {
 		if (isGameOver) {
 			setRotation(rotation + 0.01);
 		}
+
+		setDistanceTraveled((prevDistance) => getDistanceTraveled({ prevDistance, travelSpeed, delta }));
 	});
 
 	return (

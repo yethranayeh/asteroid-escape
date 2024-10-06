@@ -17,7 +17,7 @@ export function Background() {
 	}, []);
 
 	const filters = useMemo(() => {
-		if (travelSpeed === 1) {
+		if (travelSpeed <= 1) {
 			return { stars: [], clouds: [] };
 		}
 
