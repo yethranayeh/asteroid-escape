@@ -26,9 +26,9 @@ export function Health() {
 
 	return (
 		<Container>
-			<Sprite image={"/ui/ship/health-bar.png"} scale={2} />
-			<Sprite image={"/ui/ship/health.png"} scale={2} x={2} y={2} mask={mask} />
-			<UIText text={`${healthText}/100`} x={100} y={-2} />
+			<Sprite image={"/ui/ship/health-bar.png"} scale={1.6} />
+			<Sprite image={"/ui/ship/health.png"} scale={1.6} x={2} y={2} mask={mask} />
+			<UIText text={`${healthText}/100`} x={77} y={-4} />
 		</Container>
 	);
 }
