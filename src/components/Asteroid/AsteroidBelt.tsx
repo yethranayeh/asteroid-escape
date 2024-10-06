@@ -1,10 +1,10 @@
 import { Container, useTick } from "@pixi/react";
 import { Asteroid } from "./Asteroid";
 import { useCallback, useRef, useState } from "react";
-import { config } from "../config";
+import { config } from "../../config";
 import { useAtom } from "jotai";
-import { gameAtom } from "../atoms/game.atom";
-import { uuidv4 } from "../utils/uuidv4";
+import { gameAtom } from "../../atoms/game.atom";
+import { uuidv4 } from "../../utils/uuidv4";
 
 interface XLocation {
 	id: string;

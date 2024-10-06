@@ -1,29 +1,16 @@
 import type { Resource } from "pixi.js";
 import type { PixiRef } from "@pixi/react";
 
-import { AnimatedSprite, Graphics, useTick } from "@pixi/react";
+import { AnimatedSprite, useTick } from "@pixi/react";
 import { Texture } from "pixi.js";
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 
-import { config } from "../config";
-import { gameAtom } from "../atoms/game.atom";
-import { shipAtom } from "../atoms/ship.atom";
-import { range } from "../utils/range";
-
-function draw(g: any) {
-	g.beginFill(0xff3300, 0.4);
-
-	g.moveTo(-19, -16);
-	g.lineTo(19, -16);
-	g.lineTo(19, 16);
-	g.lineTo(-19, 16);
-	g.endFill();
-}
-
-export const Hitbox = forwardRef(({ name, x, y }: { name: string; x: number; y: number }, ref: any) => (
-	<Graphics ref={ref} name={name} draw={draw} x={x} y={y} visible={false} />
-));
+import { config } from "../../config";
+import { gameAtom } from "../../atoms/game.atom";
+import { shipAtom } from "../../atoms/ship.atom";
+import { range } from "../../utils/range";
+import { Hitbox } from "./Hitbox";
 
 interface Props {
 	name: string;

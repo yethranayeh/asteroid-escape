@@ -3,7 +3,7 @@ import { Container } from "@pixi/react";
 import { useTick } from "@pixi/react";
 import { useRef, useState } from "react";
 
-import { AsteroidBelt } from "./components/AsteroidBelt";
+import { AsteroidBelt } from "./components/Asteroid/AsteroidBelt";
 import { Ship } from "./components/Ship/Ship";
 
 export function Scene() {
