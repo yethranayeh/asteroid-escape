@@ -1,6 +1,6 @@
 import { Container, useTick } from "@pixi/react";
 import { Asteroid } from "./Asteroid";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { config } from "../config";
 import { useAtom } from "jotai";
 import { isGameOver } from "../atoms/game.atom";
@@ -10,33 +10,43 @@ interface XLocation {
 	id: string;
 	x: number;
 }
-
-let isAddingAsteroid = false;
-
 interface Props {
 	collidingAsteroids: Array<string>;
 	setCollidingAsteroids: any;
 }
 export function AsteroidBelt({ collidingAsteroids, setCollidingAsteroids }: Props) {
 	const [xLocations, setXLocations] = useState<XLocation[]>([]);
+	const [interval, setInterval] = useState(3);
 	const [gameOver] = useAtom(isGameOver);
+
+	const lastAsteroidTimeRef = useRef(-1); // Using useRef to persist across renders
+	const lastIntervalUpdateTimeRef = useRef(-1);
 
 	useTick(() => {
 		if (gameOver) {
 			return;
 		}
-		const now = Math.floor(performance.now() / 1000);
 
-		if (!isAddingAsteroid && now !== 0 && now % 3 === 0 && xLocations.length < 10) {
+		const currentTime = Math.floor(performance.now() / 1000);
+
+		// Handle asteroid creation logic
+		if (currentTime !== lastAsteroidTimeRef.current && currentTime % interval === 0 && xLocations.length < 10) {
 			const newXLocation: XLocation = {
 				id: uuidv4(),
 				x: Math.floor(Math.random() * config.canvas.width)
 			};
-
 			setXLocations((prevLocations) => [...prevLocations, newXLocation]);
-			isAddingAsteroid = true;
-		} else if (isAddingAsteroid && now % 3 !== 0) {
-			isAddingAsteroid = false;
+
+			// Update last asteroid spawn time to the current time
+			lastAsteroidTimeRef.current = currentTime;
+		}
+
+		// Handle interval update logic
+		if (currentTime !== lastIntervalUpdateTimeRef.current && currentTime % 10 === 0 && interval > 1) {
+			setInterval((prevInterval) => prevInterval - 1);
+
+			// Update the last interval update time
+			lastIntervalUpdateTimeRef.current = currentTime;
 		}
 	});
 
