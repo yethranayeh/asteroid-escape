@@ -4,7 +4,7 @@ import { useTick } from "@pixi/react";
 import { useRef, useState } from "react";
 
 import { AsteroidBelt } from "./components/AsteroidBelt";
-import { Ship } from "./components/Ship";
+import { Ship } from "./components/Ship/Ship";
 
 export function Scene() {
 	const ref = useRef(null);

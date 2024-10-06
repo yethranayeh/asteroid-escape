@@ -8,6 +8,8 @@ import { useAtom } from "jotai";
 
 import { config } from "../config";
 import { isGameOver } from "../atoms/game.atom";
+import { shipAtom } from "../atoms/ship.atom";
+import { range } from "../utils/range";
 
 function draw(g: any) {
 	g.beginFill(0xff3300, 0.4);
@@ -36,7 +38,8 @@ export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 	const [rotation, setRotation] = useState(0);
 	const ref = useRef<PixiRef<typeof AnimatedSprite>>(null);
 	const direction = useRef(Math.round(Math.random()));
-	const [_, setIsGameOver] = useAtom(isGameOver);
+	const setIsGameOver = useAtom(isGameOver)[1];
+	const [travelSpeed] = useAtom(shipAtom.travelSpeed);
 
 	const handleExplosion = useCallback(
 		(currentFrame: number) => {
@@ -51,7 +54,7 @@ export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 	);
 
 	useEffect(() => {
-		const frameTextures = [...Array(7).keys()].map((n) => Texture.from(`/environment/asteroid/asteroid-${n}.png`));
+		const frameTextures = range(7).map((n) => Texture.from(`/environment/asteroid/asteroid-${n}.png`));
 
 		setFrames(frameTextures);
 	}, []);
@@ -73,7 +76,7 @@ export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 		if (y + 1 > config.canvas.height + asteroidSpriteHeight) {
 			handleRemove();
 		} else {
-			setY((y) => y + 1);
+			setY((y) => y + 1 * travelSpeed);
 		}
 	});
 
