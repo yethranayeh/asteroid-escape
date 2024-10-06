@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 
 import { range } from "../../utils/range";
-import { isGameOver } from "../../atoms/game.atom";
+import { gameAtom } from "../../atoms/game.atom";
 import { shipAtom } from "../../atoms/ship.atom";
 
 export function Engine() {
 	const [idleFrames, setIdleFrames] = useState<Array<Texture<Resource>>>([]);
 	const [poweredFrames, setPoweredFrames] = useState<Array<Texture<Resource>>>([]);
-	const [gameOver] = useAtom(isGameOver);
+	const [isGameOver] = useAtom(gameAtom.isOver);
 	const [travelSpeed] = useAtom(shipAtom.travelSpeed);
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ export function Engine() {
 		setPoweredFrames(poweredTextures);
 	}, []);
 
-	if (gameOver) {
+	if (isGameOver) {
 		return null;
 	}
 

@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { Spring } from "react-spring";
 
 import { config } from "../../config";
-import { isGameOver } from "../../atoms/game.atom";
+import { gameAtom } from "../../atoms/game.atom";
 import { shipAtom } from "../../atoms/ship.atom";
 
 import { Hitbox } from "./Hitbox";
@@ -16,12 +16,12 @@ const shipSize = 48;
 export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any) => {
 	const [x, setX] = useState(config.canvas.width / 2);
 	const [rotation, setRotation] = useState(0);
-	const [gameOver] = useAtom(isGameOver);
+	const [isGameOver] = useAtom(gameAtom.isOver);
 	const [travelSpeed, setTravelSpeed] = useAtom(shipAtom.travelSpeed);
 
 	const keyDownListener = useCallback(
 		(e: KeyboardEvent) => {
-			if (destroyed || gameOver) {
+			if (destroyed || isGameOver) {
 				return;
 			}
 
@@ -37,11 +37,11 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 				setTravelSpeed(5);
 			}
 		},
-		[x, setX, destroyed, gameOver]
+		[x, setX, destroyed, isGameOver]
 	);
 	const keyUpListener = useCallback(
 		(e: KeyboardEvent) => {
-			if (destroyed || gameOver) {
+			if (destroyed || isGameOver) {
 				return;
 			}
 
@@ -49,7 +49,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 				setTravelSpeed(1);
 			}
 		},
-		[x, setX, destroyed, gameOver]
+		[x, setX, destroyed, isGameOver]
 	);
 
 	useEffect(() => {
@@ -60,10 +60,10 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 			document.removeEventListener("keydown", keyDownListener);
 			document.removeEventListener("keyup", keyUpListener);
 		};
-	}, [x, keyDownListener, destroyed, gameOver]);
+	}, [x, keyDownListener, destroyed, isGameOver]);
 
 	useTick(() => {
-		if (gameOver) {
+		if (isGameOver) {
 			setRotation(rotation + 0.01);
 		}
 	});
@@ -74,7 +74,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 				return (
 					<Container sortableChildren {...props} rotation={rotation}>
 						<Hitbox ref={ref} />
-						<Sprite image={`/ship/${gameOver ? "damaged" : "base"}.png`} zIndex={3} anchor={0.5} />
+						<Sprite image={`/ship/${isGameOver ? "damaged" : "base"}.png`} zIndex={3} anchor={0.5} />
 						<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
 						<Engine />
 					</Container>

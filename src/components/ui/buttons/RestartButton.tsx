@@ -1,13 +1,14 @@
-import { gameSession, isGameOver } from "../../../atoms/game.atom";
-import { useAtom } from "jotai";
-import { uuidv4 } from "../../../utils/uuidv4";
 import { Sprite } from "@pixi/react";
-import { config } from "../../../config";
 import { useState } from "react";
+import { useAtom } from "jotai";
+
+import { gameAtom } from "../../../atoms/game.atom";
+import { uuidv4 } from "../../../utils/uuidv4";
+import { config } from "../../../config";
 
 export function RestartButton() {
-	const setGameOver = useAtom(isGameOver)[1];
-	const setSession = useAtom(gameSession)[1];
+	const setIsGameOver = useAtom(gameAtom.isOver)[1];
+	const setSession = useAtom(gameAtom.session)[1];
 	const [isHovering, setIsHovering] = useState(false);
 	const [isPressed, setIsPressed] = useState(false);
 
@@ -15,7 +16,7 @@ export function RestartButton() {
 		<Sprite
 			eventMode='static'
 			onclick={() => {
-				setGameOver(false);
+				setIsGameOver(false);
 				setSession(uuidv4());
 			}}
 			onmouseenter={() => setIsHovering(true)}

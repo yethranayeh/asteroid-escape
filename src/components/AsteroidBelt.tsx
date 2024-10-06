@@ -3,7 +3,7 @@ import { Asteroid } from "./Asteroid";
 import { useCallback, useRef, useState } from "react";
 import { config } from "../config";
 import { useAtom } from "jotai";
-import { isGameOver } from "../atoms/game.atom";
+import { gameAtom } from "../atoms/game.atom";
 import { uuidv4 } from "../utils/uuidv4";
 
 interface XLocation {
@@ -17,13 +17,13 @@ interface Props {
 export function AsteroidBelt({ collidingAsteroids, setCollidingAsteroids }: Props) {
 	const [xLocations, setXLocations] = useState<XLocation[]>([]);
 	const [interval, setInterval] = useState(3);
-	const [gameOver] = useAtom(isGameOver);
+	const [isGameOver] = useAtom(gameAtom.isOver);
 
 	const lastAsteroidTimeRef = useRef(-1); // Using useRef to persist across renders
 	const lastIntervalUpdateTimeRef = useRef(-1);
 
 	useTick(() => {
-		if (gameOver) {
+		if (isGameOver) {
 			return;
 		}
 
