@@ -4,11 +4,11 @@ import { useAtom } from "jotai";
 import { config } from "./config";
 import { gameAtom } from "./atoms/game.atom";
 
+import { Scene } from "./Scene";
 import { Background } from "./components/Background";
 import { RestartButton } from "./components/ui/buttons/RestartButton";
-import { Scene } from "./Scene";
 import { GameOver } from "./components/ui/text/GameOver";
-import Info from "./components/ui/text/Info";
+import { UI } from "./components/ui/UI";
 
 const App = () => {
 	const [isGameOver] = useAtom(gameAtom.isOver);
@@ -20,7 +20,7 @@ const App = () => {
 
 			<Scene />
 
-			<Info />
+			<UI />
 			{isGameOver && (
 				<>
 					<GameOver />

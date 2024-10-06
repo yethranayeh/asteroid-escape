@@ -7,7 +7,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 
 import { config } from "../../config";
-import { gameAtom } from "../../atoms/game.atom";
 import { shipAtom } from "../../atoms/ship.atom";
 import { range } from "../../utils/range";
 import { Hitbox } from "./Hitbox";
@@ -25,13 +24,11 @@ export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 	const [rotation, setRotation] = useState(0);
 	const ref = useRef<PixiRef<typeof AnimatedSprite>>(null);
 	const direction = useRef(Math.round(Math.random()));
-	const setIsGameOver = useAtom(gameAtom.isOver)[1];
 	const [travelSpeed] = useAtom(shipAtom.travelSpeed);
 
 	const handleExplosion = useCallback(
 		(currentFrame: number) => {
 			if (isExploding) {
-				setIsGameOver(true);
 				if (currentFrame === 6) {
 					handleRemove();
 				}

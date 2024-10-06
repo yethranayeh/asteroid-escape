@@ -11,6 +11,7 @@ import { getDistanceTraveled } from "./utils/getDistanceTraveled";
 
 import { Hitbox } from "./Hitbox";
 import { Engine } from "./Engine";
+import { Hull } from "./Hull";
 
 const shipSize = 48;
 
@@ -79,7 +80,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 				return (
 					<Container sortableChildren {...props} rotation={rotation}>
 						<Hitbox ref={ref} />
-						<Sprite image={`/ship/${isGameOver ? "damaged" : "base"}.png`} zIndex={3} anchor={0.5} />
+						<Hull />
 						<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
 						<Engine />
 					</Container>

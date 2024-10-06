@@ -1,16 +1,21 @@
 import type { Graphics, PixiRef } from "@pixi/react";
-import { Container } from "@pixi/react";
-import { useTick } from "@pixi/react";
+import { Container, useTick } from "@pixi/react";
 import { useRef, useState } from "react";
+import { useAtom } from "jotai";
 
 import { AsteroidBelt } from "./components/Asteroid/AsteroidBelt";
 import { Ship } from "./components/Ship/Ship";
+import { shipAtom } from "./atoms/ship.atom";
+import { gameAtom } from "./atoms/game.atom";
 
 export function Scene() {
 	const ref = useRef(null);
 	const shipHitbox = useRef<PixiRef<typeof Graphics>>(null);
 	const [collidingAsteroids, setCollidingAsteroids] = useState<Array<string>>([]);
+	const [shipHealth, setShipHealth] = useAtom(shipAtom.health);
+	const setIsGameOver = useAtom(gameAtom.isOver)[1];
 
+	// TODO: move collision handling logic elsewhere and import it here
 	useTick(() => {
 		if (ref.current) {
 			const node = ref.current as PixiRef<typeof Container>;
@@ -35,10 +40,15 @@ export function Scene() {
 						shipBounds.y + shipBounds.height > asteroidBounds.y;
 
 					if (isColliding) {
-						setCollidingAsteroids((prev) => {
-							const unique = [...new Set([...prev, asteroid.name!])];
-							return unique;
-						});
+						const newCollidingAsteroid = asteroid.name!;
+
+						if (!collidingAsteroids.includes(newCollidingAsteroid)) {
+							setCollidingAsteroids((prev) => [...prev, newCollidingAsteroid]);
+							setShipHealth((prev) => prev - 33.5);
+							if (shipHealth - 33.5 <= 0) {
+								setIsGameOver(true);
+							}
+						}
 					} else {
 						setCollidingAsteroids((prev) => prev.filter((name) => name !== asteroid.name!));
 					}
