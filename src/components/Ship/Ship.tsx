@@ -12,14 +12,16 @@ import { getDistanceTraveled } from "./utils/getDistanceTraveled";
 import { Hitbox } from "./Hitbox";
 import { Engine } from "./Engine";
 import { Hull } from "./Hull";
+import { Shield } from "./Shield";
 
 const shipSize = 48;
 
 export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any) => {
 	const [x, setX] = useState(config.canvas.width / 2);
 	const [rotation, setRotation] = useState(0);
-	const [isGameOver] = useAtom(gameAtom.isOver);
 	const [travelSpeed, setTravelSpeed] = useAtom(shipAtom.travelSpeed);
+	const [isShielded] = useAtom(shipAtom.shield);
+	const [isGameOver] = useAtom(gameAtom.isOver);
 	const setDistanceTraveled = useAtom(shipAtom.distanceTraveled)[1];
 
 	const keyDownListener = useCallback(
@@ -80,6 +82,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 				return (
 					<Container sortableChildren {...props} rotation={rotation}>
 						<Hitbox ref={ref} />
+						{!isGameOver && isShielded && <Shield />}
 						<Hull />
 						<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
 						<Engine />

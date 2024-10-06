@@ -13,6 +13,7 @@ export function RestartButton() {
 	const setTravelSpeed = useAtom(shipAtom.travelSpeed)[1];
 	const setDistanceTraveled = useAtom(shipAtom.distanceTraveled)[1];
 	const setHealth = useAtom(shipAtom.health)[1];
+	const setIsShielded = useAtom(shipAtom.shield)[1];
 	const [isHovering, setIsHovering] = useState(false);
 	const [isPressed, setIsPressed] = useState(false);
 
@@ -22,6 +23,7 @@ export function RestartButton() {
 			onclick={() => {
 				setIsGameOver(false);
 				setHealth(100);
+				setIsShielded(false);
 				setTravelSpeed(1);
 				setDistanceTraveled(0);
 				setSession(uuidv4());

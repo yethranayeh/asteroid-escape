@@ -7,12 +7,14 @@ import { AsteroidBelt } from "./components/Asteroid/AsteroidBelt";
 import { Ship } from "./components/Ship/Ship";
 import { shipAtom } from "./atoms/ship.atom";
 import { gameAtom } from "./atoms/game.atom";
+import { ShieldPickup } from "./components/ShieldPickup";
 
 export function Scene() {
 	const ref = useRef(null);
 	const shipHitbox = useRef<PixiRef<typeof Graphics>>(null);
 	const [collidingAsteroids, setCollidingAsteroids] = useState<Array<string>>([]);
 	const [shipHealth, setShipHealth] = useAtom(shipAtom.health);
+	const [isShielded, setIsShielded] = useAtom(shipAtom.shield);
 	const setIsGameOver = useAtom(gameAtom.isOver)[1];
 
 	// TODO: move collision handling logic elsewhere and import it here
@@ -21,6 +23,7 @@ export function Scene() {
 			const node = ref.current as PixiRef<typeof Container>;
 			const ship = shipHitbox.current;
 			const asteroidBelt = node.children.find((c) => c.name === "Asteroid-Belt");
+			const shieldPickup = node.children.find((c) => c.name === "Shield");
 
 			if (ship && asteroidBelt) {
 				// check collision
@@ -44,14 +47,33 @@ export function Scene() {
 
 						if (!collidingAsteroids.includes(newCollidingAsteroid)) {
 							setCollidingAsteroids((prev) => [...prev, newCollidingAsteroid]);
-							setShipHealth((prev) => prev - 33.5);
-							if (shipHealth - 33.5 <= 0) {
-								setIsGameOver(true);
+							if (isShielded) {
+								setIsShielded(false);
+							} else {
+								setShipHealth((prev) => prev - 33.5);
+								if (shipHealth - 33.5 <= 0) {
+									setIsGameOver(true);
+								}
 							}
 						}
 					} else {
 						setCollidingAsteroids((prev) => prev.filter((name) => name !== asteroid.name!));
 					}
+				}
+			}
+
+			if (ship && shieldPickup) {
+				const shipBounds = ship.getBounds();
+				const shieldBounds = shieldPickup.getBounds();
+
+				const isColliding =
+					shipBounds.x < shieldBounds.x + shieldBounds.width &&
+					shipBounds.x + shipBounds.width > shieldBounds.x &&
+					shipBounds.y < shieldBounds.y + shieldBounds.height &&
+					shipBounds.y + shipBounds.height > shieldBounds.y;
+
+				if (isColliding) {
+					setIsShielded(true);
 				}
 			}
 		}
@@ -61,6 +83,7 @@ export function Scene() {
 		<Container ref={ref}>
 			<Ship ref={shipHitbox} destroyed={!!collidingAsteroids.length} />
 			<AsteroidBelt collidingAsteroids={collidingAsteroids} setCollidingAsteroids={setCollidingAsteroids} />
+			<ShieldPickup />
 		</Container>
 	);
 }
