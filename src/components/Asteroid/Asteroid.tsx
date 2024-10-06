@@ -63,7 +63,9 @@ export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 		if (y + 1 > config.canvas.height + asteroidSpriteHeight) {
 			handleRemove();
 		} else {
-			setY((y) => y + 1 * travelSpeed);
+			// If the ship travel speed decreases due to collision, the other asteroid floating speeds should remain constant at "1"
+			const factor = travelSpeed <= 1 ? 1 : travelSpeed;
+			setY((y) => y + 1 * factor);
 		}
 	});
 

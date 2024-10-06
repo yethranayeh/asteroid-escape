@@ -67,6 +67,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 	useTick((delta) => {
 		if (isGameOver) {
 			setRotation(rotation + 0.01);
+			setTravelSpeed(0.3);
 		}
 
 		setDistanceTraveled((prevDistance) => getDistanceTraveled({ prevDistance, travelSpeed, delta }));

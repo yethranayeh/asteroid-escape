@@ -5,10 +5,13 @@ import { useAtom } from "jotai";
 import { gameAtom } from "../../../atoms/game.atom";
 import { uuidv4 } from "../../../utils/uuidv4";
 import { config } from "../../../config";
+import { shipAtom } from "../../../atoms/ship.atom";
 
 export function RestartButton() {
 	const setIsGameOver = useAtom(gameAtom.isOver)[1];
 	const setSession = useAtom(gameAtom.session)[1];
+	const setTravelSpeed = useAtom(shipAtom.travelSpeed)[1];
+	const setDistanceTraveled = useAtom(shipAtom.distanceTraveled)[1];
 	const [isHovering, setIsHovering] = useState(false);
 	const [isPressed, setIsPressed] = useState(false);
 
@@ -17,6 +20,8 @@ export function RestartButton() {
 			eventMode='static'
 			onclick={() => {
 				setIsGameOver(false);
+				setTravelSpeed(1);
+				setDistanceTraveled(0);
 				setSession(uuidv4());
 			}}
 			onmouseenter={() => setIsHovering(true)}
