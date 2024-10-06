@@ -1,13 +1,13 @@
-import { Sprite, Stage } from "@pixi/react";
-
-import { Background } from "./components/Background";
+import { Stage } from "@pixi/react";
+import { useAtom } from "jotai";
 
 import { config } from "./config";
-
 import { gameSession, isGameOver } from "./atoms/game.atom";
-import { useAtom } from "jotai";
+
+import { Background } from "./components/Background";
 import { RestartButton } from "./components/ui/buttons/RestartButton";
 import { Scene } from "./Scene";
+import { GameOver } from "./components/ui/text/GameOver";
 
 const App = () => {
 	const [gameOver] = useAtom(isGameOver);
@@ -20,13 +20,7 @@ const App = () => {
 			<Scene />
 			{gameOver && (
 				<>
-					<Sprite
-						image='/game_over.png'
-						x={config.canvas.width / 2}
-						y={config.canvas.height / 2}
-						anchor={0.5}
-						scale={3}
-					/>
+					<GameOver />
 					<RestartButton />
 				</>
 			)}
