@@ -13,10 +13,22 @@ import { EndingScene } from "./EndingScene";
 
 import { TextStyle } from "pixi.js";
 import { PlayButton } from "./components/ui/buttons/PlayButton";
+import { UIText } from "./components/ui/text/UIText";
+import { shipAtom } from "./atoms/ship.atom";
+import { useEffect, useRef } from "react";
 
 function Game() {
 	const [isGameOver] = useAtom(gameAtom.isOver);
 	const [isFinished] = useAtom(gameAtom.isFinished);
+	const [travelDistance] = useAtom(shipAtom.distanceTraveled);
+	const finalDistance = useRef(0);
+
+	useEffect(() => {
+		if (isGameOver) {
+			finalDistance.current = travelDistance;
+		}
+	}, [isGameOver]);
+
 	return (
 		<>
 			{isFinished ? (
@@ -31,6 +43,11 @@ function Game() {
 			{isGameOver && (
 				<>
 					<GameOver />
+					<UIText
+						text={`You managed to travel ${finalDistance.current.toFixed(2)} astronomical units`}
+						x={70}
+						y={420}
+					/>
 					<RestartButton />
 				</>
 			)}
@@ -47,13 +64,22 @@ const style = new TextStyle({
 	wordWrapWidth: config.canvas.width - 24
 });
 
+const controls = new TextStyle({
+	fontFamily: "sans-serif",
+	fill: 0xffffff,
+	fontSize: 14,
+	fontWeight: "600",
+	wordWrap: true,
+	wordWrapWidth: config.canvas.width - 24
+});
+
 function StartScreen() {
 	return (
 		<>
 			<Text
 				anchor={0.5}
 				x={config.canvas.width / 2}
-				y={config.canvas.height / 2}
+				y={config.canvas.height / 2 - 50}
 				style={style}
 				text={`In the distant future, the Earth has become uninhabitable, and humanity is on the brink of extinction.
 
@@ -63,6 +89,7 @@ function StartScreen() {
 
 			However, the journey is perilous. The ship must navigate through a treacherous asteroid belt before reaching safety.`}
 			/>
+			<Text anchor={0.5} x={config.canvas.width / 2} y={600} style={controls} text='(A - left, D - right, W - boost)' />
 
 			<PlayButton />
 		</>
