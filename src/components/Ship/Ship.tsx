@@ -69,7 +69,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 	});
 
 	return (
-		<Spring from={{ x, y: 750 }} to={{ x, y: travelSpeed > 1 ? 650 : 750 }}>
+		<Spring from={{ x: config.canvas.width / 2, y: 750 }} to={{ x, y: travelSpeed > 1 ? 650 : 750 }}>
 			{(props) => {
 				return (
 					<Container sortableChildren {...props} rotation={rotation}>
