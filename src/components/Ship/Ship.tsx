@@ -1,5 +1,5 @@
-import { Sprite, useTick } from "@pixi/react";
-import { Container } from "@pixi/react-animated";
+import { useTick } from "@pixi/react";
+
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { Spring } from "react-spring";
@@ -9,10 +9,7 @@ import { gameAtom } from "../../atoms/game.atom";
 import { shipAtom } from "../../atoms/ship.atom";
 import { getDistanceTraveled } from "./utils/getDistanceTraveled";
 
-import { Hitbox } from "./Hitbox";
-import { Engine } from "./Engine";
-import { Hull } from "./Hull";
-import { Shield } from "./Shield";
+import { ShipPure } from "./ShipPure";
 
 const shipSize = 48;
 
@@ -20,8 +17,8 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 	const [x, setX] = useState(config.canvas.width / 2);
 	const [rotation, setRotation] = useState(0);
 	const [travelSpeed, setTravelSpeed] = useAtom(shipAtom.travelSpeed);
-	const [isShielded] = useAtom(shipAtom.shield);
 	const [isGameOver] = useAtom(gameAtom.isOver);
+	const [isFinished] = useAtom(gameAtom.isFinished);
 	const setDistanceTraveled = useAtom(shipAtom.distanceTraveled)[1];
 
 	const keyDownListener = useCallback(
@@ -58,14 +55,24 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 	);
 
 	useEffect(() => {
-		document.addEventListener("keydown", keyDownListener);
-		document.addEventListener("keyup", keyUpListener);
+		if (isFinished) {
+			document.removeEventListener("keydown", keyDownListener);
+			document.removeEventListener("keyup", keyUpListener);
+			setX(config.canvas.width / 2);
+		}
+	}, [isFinished]);
+
+	useEffect(() => {
+		if (!isFinished) {
+			document.addEventListener("keydown", keyDownListener);
+			document.addEventListener("keyup", keyUpListener);
+		}
 
 		return () => {
 			document.removeEventListener("keydown", keyDownListener);
 			document.removeEventListener("keyup", keyUpListener);
 		};
-	}, [x, keyDownListener, destroyed, isGameOver]);
+	}, [x, keyDownListener, destroyed, isGameOver, isFinished]);
 
 	useTick((delta) => {
 		if (isGameOver) {
@@ -78,17 +85,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 
 	return (
 		<Spring from={{ x: config.canvas.width / 2, y: 750 }} to={{ x, y: travelSpeed > 1 ? 650 : 750 }}>
-			{(props) => {
-				return (
-					<Container sortableChildren {...props} rotation={rotation}>
-						<Hitbox ref={ref} />
-						{!isGameOver && isShielded && <Shield />}
-						<Hull />
-						<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
-						<Engine />
-					</Container>
-				);
-			}}
+			{(props) => <ShipPure ref={ref} {...props} rotation={rotation} />}
 		</Spring>
 	);
 });
