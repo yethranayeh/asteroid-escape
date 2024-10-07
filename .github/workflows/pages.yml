@@ -15,6 +15,9 @@ jobs:
         # You may use a newer version of https://github.com/actions/checkout
         uses: actions/checkout@v4
 
+      - name: Install libraries
+        run: npm install
+
       - name: Build game files
         run: npm run build
 
