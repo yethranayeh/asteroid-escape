@@ -1,5 +1,5 @@
 export const config = {
-	baseUrl: "https://www.aktasalper.com/asteroid-escape",
+	baseUrl: import.meta.env.DEV ? "." : "https://www.aktasalper.com/asteroid-escape",
 	canvas: {
 		width: 360,
 		height: 800

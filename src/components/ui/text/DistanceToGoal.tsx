@@ -28,8 +28,8 @@ export function DistanceToGoal() {
 
 	return (
 		<Container x={180} y={10}>
-			<Sprite image={config.baseUrl + "/ui/indicator.png"} scale={2} y={y} />
-			<UIText text={`${remainingDistance.toFixed(2)}ua`} x={5} y={40} anchor={0.5} />
+			<Sprite image={config.baseUrl + "/ui/indicator.png"} scale={0.3} anchor={0.5} y={y} />
+			<UIText text={`${remainingDistance.toFixed(2)}ua`} x={2} y={40} anchor={0.5} />
 		</Container>
 	);
 }

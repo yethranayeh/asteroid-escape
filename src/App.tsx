@@ -1,4 +1,4 @@
-import { Stage, Text } from "@pixi/react";
+import { Sprite, Stage, Text } from "@pixi/react";
 import { useAtom } from "jotai";
 
 import { config } from "./config";
@@ -79,7 +79,7 @@ function StartScreen() {
 			<Text
 				anchor={0.5}
 				x={config.canvas.width / 2}
-				y={config.canvas.height / 2 - 50}
+				y={config.canvas.height / 2 - 80}
 				style={style}
 				text={`In the distant future, the Earth has become uninhabitable, and humanity is on the brink of extinction.
 
@@ -89,7 +89,21 @@ function StartScreen() {
 
 			However, the journey is perilous. The ship must navigate through a treacherous asteroid belt before reaching safety.`}
 			/>
-			<Text anchor={0.5} x={config.canvas.width / 2} y={600} style={controls} text='(A - left, D - right, W - boost)' />
+
+			<Text anchor={0.5} x={config.canvas.width / 2} y={540} style={controls} text='Boost' />
+			<Sprite
+				image={`${config.baseUrl}/ui/keyboard/w.png`}
+				x={config.canvas.width / 2}
+				y={570}
+				scale={0.8}
+				anchor={0.5}
+			/>
+
+			<Text anchor={0.5} x={100} y={610} style={controls} text='Left' />
+			<Sprite image={`${config.baseUrl}/ui/keyboard/a.png`} x={140} y={610} scale={0.8} anchor={0.5} />
+
+			<Text anchor={0.5} x={260} y={610} style={controls} text='Right' />
+			<Sprite image={`${config.baseUrl}/ui/keyboard/d.png`} x={220} y={610} scale={0.8} anchor={0.5} />
 
 			<PlayButton />
 		</>
