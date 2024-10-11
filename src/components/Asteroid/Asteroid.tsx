@@ -38,7 +38,7 @@ export const Asteroid = ({ name, isExploding, x, handleRemove }: Props) => {
 	);
 
 	useEffect(() => {
-		const frameTextures = range(7).map((n) => Texture.from(`/environment/asteroid/asteroid-${n}.png`));
+		const frameTextures = range(7).map((n) => Texture.from(`./environment/asteroid/asteroid-${n}.png`));
 
 		setFrames(frameTextures);
 	}, []);

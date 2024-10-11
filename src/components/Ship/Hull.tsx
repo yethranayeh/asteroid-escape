@@ -19,5 +19,5 @@ function getHullName(hp: number) {
 // TODO: pre-load images so there is no flashing
 export function Hull() {
 	const [health] = useAtom(shipAtom.health);
-	return <Sprite image={`/ship/hull/${getHullName(health)}.png`} zIndex={3} anchor={0.5} />;
+	return <Sprite image={`./ship/hull/${getHullName(health)}.png`} zIndex={3} anchor={0.5} />;
 }

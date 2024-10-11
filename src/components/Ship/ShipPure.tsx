@@ -18,7 +18,7 @@ export const ShipPure = forwardRef((props: ComponentProps<typeof Container>, ref
 			<Hitbox ref={ref} />
 			{!isGameOver && isShielded && <Shield />}
 			<Hull />
-			<Sprite image='/ship/engine.png' zIndex={2} anchor={0.5} />
+			<Sprite image='./ship/engine.png' zIndex={2} anchor={0.5} />
 			<Engine />
 		</Container>
 	);

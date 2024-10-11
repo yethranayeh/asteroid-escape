@@ -8,7 +8,7 @@ export function ShieldUI() {
 
 	return (
 		<Container scale={1} y={15}>
-			<Sprite image={`/ui/ship/shield-${isShielded ? "full" : "empty"}.png`} />
+			<Sprite image={`./ui/ship/shield-${isShielded ? "full" : "empty"}.png`} />
 		</Container>
 	);
 }

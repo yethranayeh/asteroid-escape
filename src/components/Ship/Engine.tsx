@@ -14,11 +14,11 @@ export function Engine() {
 	const [travelSpeed] = useAtom(shipAtom.travelSpeed);
 
 	useEffect(() => {
-		const idleTextures = range(4).map((n) => Texture.from(`/ship/engine/idle-${n}.png`));
+		const idleTextures = range(4).map((n) => Texture.from(`./ship/engine/idle-${n}.png`));
 
 		setIdleFrames(idleTextures);
 
-		const poweredTextures = range(4).map((n) => Texture.from(`/ship/engine/powered-${n}.png`));
+		const poweredTextures = range(4).map((n) => Texture.from(`./ship/engine/powered-${n}.png`));
 		setPoweredFrames(poweredTextures);
 	}, []);
 

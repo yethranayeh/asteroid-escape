@@ -7,7 +7,7 @@ export function Shield() {
 	const [frames, setFrames] = useState<Array<Texture<Resource>>>([]);
 
 	useEffect(() => {
-		const textures = range(6).map((n) => Texture.from(`/ship/shield/shield-${n}.png`));
+		const textures = range(6).map((n) => Texture.from(`./ship/shield/shield-${n}.png`));
 
 		setFrames(textures);
 	}, []);

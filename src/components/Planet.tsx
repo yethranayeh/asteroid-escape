@@ -7,7 +7,7 @@ export function Planet() {
 	const [frames, setFrames] = useState<Array<Texture<Resource>>>([]);
 
 	useEffect(() => {
-		const textures = range(77).map((n) => Texture.from(`/planet/planet-${n}.png`));
+		const textures = range(77).map((n) => Texture.from(`./planet/planet-${n}.png`));
 
 		setFrames(textures);
 	}, []);

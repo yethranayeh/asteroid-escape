@@ -28,7 +28,7 @@ export function DistanceToGoal() {
 
 	return (
 		<Container x={180} y={10}>
-			<Sprite image='/ui/indicator.png' scale={2} y={y} />
+			<Sprite image='./ui/indicator.png' scale={2} y={y} />
 			<UIText text={`${remainingDistance.toFixed(2)}ua`} x={5} y={40} anchor={0.5} />
 		</Container>
 	);
