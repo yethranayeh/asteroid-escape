@@ -8,6 +8,7 @@ import { useAtom } from "jotai";
 import { gameAtom } from "../../atoms/game.atom";
 import { shipAtom } from "../../atoms/ship.atom";
 import { Shield } from "./Shield";
+import { config } from "../../config";
 
 export const ShipPure = forwardRef((props: ComponentProps<typeof Container>, ref) => {
 	const [isGameOver] = useAtom(gameAtom.isOver);
@@ -18,7 +19,7 @@ export const ShipPure = forwardRef((props: ComponentProps<typeof Container>, ref
 			<Hitbox ref={ref} />
 			{!isGameOver && isShielded && <Shield />}
 			<Hull />
-			<Sprite image='./ship/engine.png' zIndex={2} anchor={0.5} />
+			<Sprite image={config.baseUrl + "/ship/engine.png"} zIndex={2} anchor={0.5} />
 			<Engine />
 		</Container>
 	);

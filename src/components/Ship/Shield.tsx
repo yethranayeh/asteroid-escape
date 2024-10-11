@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { range } from "../../utils/range";
 import { AnimatedSprite } from "@pixi/react";
 import { Resource, Texture } from "pixi.js";
+import { config } from "../../config";
 
 export function Shield() {
 	const [frames, setFrames] = useState<Array<Texture<Resource>>>([]);
 
 	useEffect(() => {
-		const textures = range(6).map((n) => Texture.from(`./ship/shield/shield-${n}.png`));
+		const textures = range(6).map((n) => Texture.from(`${config.baseUrl}/ship/shield/shield-${n}.png`));
 
 		setFrames(textures);
 	}, []);

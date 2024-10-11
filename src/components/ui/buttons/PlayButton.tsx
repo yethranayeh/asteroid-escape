@@ -23,7 +23,7 @@ export function PlayButton() {
 			}}
 			onmousedown={() => setIsPressed(true)}
 			onmouseup={() => setIsPressed(false)} // FIXME: this does not get triggered when button is pressed and mouse is moved away from button and released
-			image={`/ui/buttons/play/${isPressed ? "pressed" : isHovering ? "hover" : "base"}.png`}
+			image={`${config.baseUrl}/ui/buttons/play/${isPressed ? "pressed" : isHovering ? "hover" : "base"}.png`}
 			x={config.canvas.width / 2}
 			y={650}
 			anchor={0.5}

@@ -5,6 +5,7 @@ import { useMemo } from "react";
 
 import { shipAtom } from "../../../atoms/ship.atom";
 import { UIText } from "../text/UIText";
+import { config } from "../../../config";
 
 export function Health() {
 	const [health] = useAtom(shipAtom.health);
@@ -26,8 +27,8 @@ export function Health() {
 
 	return (
 		<Container>
-			<Sprite image='./ui/ship/health-bar.png' scale={1.6} />
-			<Sprite image='./ui/ship/health.png' scale={1.6} x={2} y={2} mask={mask} />
+			<Sprite image={config.baseUrl + "/ui/ship/health-bar.png"} scale={1.6} />
+			<Sprite image={config.baseUrl + "/ui/ship/health.png"} scale={1.6} x={2} y={2} mask={mask} />
 			<UIText text={`${healthText}/100`} x={77} y={-4} />
 		</Container>
 	);

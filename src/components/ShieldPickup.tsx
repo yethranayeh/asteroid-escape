@@ -30,5 +30,5 @@ export function ShieldPickup() {
 		return null;
 	}
 
-	return <Sprite name='Shield' image='/environment/shield.png' x={x} y={y} scale={2} />;
+	return <Sprite name='Shield' image={config.baseUrl + "/environment/shield.png"} x={x} y={y} scale={2} />;
 }

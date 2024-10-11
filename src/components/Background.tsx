@@ -31,7 +31,7 @@ export function Background() {
 	return (
 		<>
 			<TilingSprite
-				image='/bg-clouds.png'
+				image={config.baseUrl + "/bg-clouds.png"}
 				tilePosition={{ x: 512 / 2, y: y }}
 				width={config.canvas.width}
 				height={config.canvas.height}
@@ -39,7 +39,7 @@ export function Background() {
 				filters={filters.clouds}
 			/>
 			<TilingSprite
-				image='/bg-stars.png'
+				image={config.baseUrl + "/bg-stars.png"}
 				tilePosition={{ x: 512 / 2, y: y / 2 }}
 				width={config.canvas.width}
 				height={config.canvas.height}

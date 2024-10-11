@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 import { range } from "../../utils/range";
 import { gameAtom } from "../../atoms/game.atom";
 import { shipAtom } from "../../atoms/ship.atom";
+import { config } from "../../config";
 
 export function Engine() {
 	const [idleFrames, setIdleFrames] = useState<Array<Texture<Resource>>>([]);
@@ -14,11 +15,11 @@ export function Engine() {
 	const [travelSpeed] = useAtom(shipAtom.travelSpeed);
 
 	useEffect(() => {
-		const idleTextures = range(4).map((n) => Texture.from(`./ship/engine/idle-${n}.png`));
+		const idleTextures = range(4).map((n) => Texture.from(`${config.baseUrl}/ship/engine/idle-${n}.png`));
 
 		setIdleFrames(idleTextures);
 
-		const poweredTextures = range(4).map((n) => Texture.from(`./ship/engine/powered-${n}.png`));
+		const poweredTextures = range(4).map((n) => Texture.from(`${config.baseUrl}/ship/engine/powered-${n}.png`));
 		setPoweredFrames(poweredTextures);
 	}, []);
 
