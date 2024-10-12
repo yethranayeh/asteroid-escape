@@ -1,14 +1,16 @@
 import { Sprite } from "@pixi/react";
+import { Texture } from "pixi.js";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 
 import { gameAtom } from "../../../atoms/game.atom";
+import { shipAtom } from "../../../atoms/ship.atom";
 import { config } from "../../../config";
-import { Texture } from "pixi.js";
 
 const variants = ["base", "hover"];
 export function PlayButton() {
 	const setGameStarted = useAtom(gameAtom.isStarted)[1];
+	const setTravelSpeed = useAtom(shipAtom.travelSpeed)[1];
 	const [isHovering, setIsHovering] = useState(false);
 	const [textures, setTextures] = useState<Array<Texture>>([]);
 
@@ -30,13 +32,13 @@ export function PlayButton() {
 		<Sprite
 			eventMode='static'
 			onclick={() => {
+				setTravelSpeed(1);
 				setGameStarted(true);
 			}}
 			onmouseenter={() => setIsHovering(true)}
 			onmouseleave={() => setIsHovering(false)}
 			texture={isHovering ? textures[1] : textures[0]}
-			x={config.canvas.width / 2}
-			y={680}
+			y={60}
 			anchor={0.5}
 			scale={0.5}
 		/>
