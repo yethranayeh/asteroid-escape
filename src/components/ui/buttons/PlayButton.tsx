@@ -24,6 +24,11 @@ export function PlayButton() {
 		setTextures(result);
 	}, []);
 
+	function startGame() {
+		setTravelSpeed(1);
+		setGameStarted(true);
+	}
+
 	if (textures.length === 0) {
 		return null;
 	}
@@ -31,10 +36,8 @@ export function PlayButton() {
 	return (
 		<Sprite
 			eventMode='static'
-			onclick={() => {
-				setTravelSpeed(1);
-				setGameStarted(true);
-			}}
+			onclick={startGame}
+			ontouchend={startGame}
 			onmouseenter={() => setIsHovering(true)}
 			onmouseleave={() => setIsHovering(false)}
 			texture={isHovering ? textures[1] : textures[0]}

@@ -29,6 +29,15 @@ export function RestartButton() {
 		setTextures(result);
 	}, []);
 
+	function restartGame() {
+		setIsGameOver(false);
+		setHealth(100);
+		setIsShielded(false);
+		setTravelSpeed(1);
+		setDistanceTraveled(0);
+		setSession(uuidv4());
+	}
+
 	if (textures.length === 0) {
 		return null;
 	}
@@ -36,14 +45,8 @@ export function RestartButton() {
 	return (
 		<Sprite
 			eventMode='static'
-			onclick={() => {
-				setIsGameOver(false);
-				setHealth(100);
-				setIsShielded(false);
-				setTravelSpeed(1);
-				setDistanceTraveled(0);
-				setSession(uuidv4());
-			}}
+			onclick={restartGame}
+			ontouchend={restartGame}
 			onmouseenter={() => setIsHovering(true)}
 			onmouseleave={() => setIsHovering(false)}
 			texture={isHovering ? textures[1] : textures[0]}
