@@ -1,12 +1,13 @@
 import { Container, Text, useTick } from "@pixi/react";
 import { Container as AnimatedContainer } from "@pixi/react-animated";
-import { Spring } from "react-spring";
-
-import { config } from "./config";
-import { ShipPure } from "./components/Ship/ShipPure";
-import { Planet } from "./components/Planet";
-import { useState } from "react";
 import { TextStyle } from "pixi.js";
+import { Spring } from "react-spring";
+import { useState } from "react";
+
+import { ShipPure } from "../components/Ship/ShipPure";
+import { Planet } from "../components/Planet";
+
+import { config } from "../config";
 
 const style = new TextStyle({
 	fontFamily: "monospace",

@@ -1,13 +1,15 @@
 import type { Graphics, PixiRef } from "@pixi/react";
+
 import { Container, useTick } from "@pixi/react";
 import { useRef, useState } from "react";
 import { useAtom } from "jotai";
 
-import { AsteroidBelt } from "./components/Asteroid/AsteroidBelt";
-import { Ship } from "./components/Ship/Ship";
-import { shipAtom } from "./atoms/ship.atom";
-import { gameAtom } from "./atoms/game.atom";
-import { ShieldPickup } from "./components/ShieldPickup";
+import { AsteroidBelt } from "../components/Asteroid/AsteroidBelt";
+import { Ship } from "../components/Ship/Ship";
+import { ShieldPickup } from "../components/ShieldPickup";
+
+import { shipAtom } from "../atoms/ship.atom";
+import { gameAtom } from "../atoms/game.atom";
 
 export function Scene() {
 	const ref = useRef(null);
