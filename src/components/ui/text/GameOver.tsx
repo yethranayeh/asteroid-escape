@@ -3,12 +3,10 @@ import { Text } from "@pixi/react";
 import { config } from "../../../config";
 
 const style = new TextStyle({
-	fontFamily: "Sixtyfour Convergence",
+	fontFamily: config.fonts,
 	fontSize: 32,
-	fontWeight: "400",
-	fill: ["#ffffff", "#00ff99"] // gradient
-	// wordWrap: true,
-	// wordWrapWidth: 200
+	fontWeight: "700",
+	fill: ["#ffffff"]
 });
 
 export const GameOver = () => (

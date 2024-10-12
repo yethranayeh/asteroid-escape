@@ -15,7 +15,7 @@ import { TextStyle } from "pixi.js";
 import { PlayButton } from "./components/ui/buttons/PlayButton";
 import { UIText } from "./components/ui/text/UIText";
 import { shipAtom } from "./atoms/ship.atom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Game() {
 	const [isGameOver] = useAtom(gameAtom.isOver);
@@ -56,7 +56,7 @@ function Game() {
 }
 
 const style = new TextStyle({
-	fontFamily: "monospace",
+	fontFamily: config.fonts,
 	fill: 0xffffff,
 	fontSize: 18,
 	fontWeight: "400",
@@ -65,7 +65,7 @@ const style = new TextStyle({
 });
 
 const controls = new TextStyle({
-	fontFamily: "sans-serif",
+	fontFamily: "monospace",
 	fill: 0xffffff,
 	fontSize: 14,
 	fontWeight: "600",
@@ -113,6 +113,18 @@ function StartScreen() {
 const App = () => {
 	const [isGameStarted] = useAtom(gameAtom.isStarted);
 	const [session] = useAtom(gameAtom.session);
+	const [reRendered, setReRendered] = useState(false);
+	console.log("🚀 ~ App ~ reRendered:", reRendered);
+
+	// Force re-render to apply fonts. I don't know why it does not apply them on initial render.
+	useEffect(() => {
+		const timeout = setTimeout(() => setReRendered(true), 500);
+		if (reRendered === true) {
+			clearTimeout(timeout);
+		}
+
+		return () => clearTimeout(timeout);
+	}, [reRendered, setReRendered]);
 
 	return (
 		<Stage key={session} width={config.canvas.width} height={config.canvas.height} options={{ background: 0x1099bb }}>
