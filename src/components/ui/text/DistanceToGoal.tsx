@@ -1,10 +1,12 @@
 import { useAtom } from "jotai";
-import { shipAtom } from "../../../atoms/ship.atom";
-import { UIText } from "./UIText";
 import { Container, Sprite, useTick } from "@pixi/react";
 import { useEffect, useState } from "react";
-import { config } from "../../../config";
-import { gameAtom } from "../../../atoms/game.atom";
+
+import { shipAtom } from "atoms/ship.atom";
+import { gameAtom } from "atoms/game.atom";
+import { config } from "config";
+
+import { UIText } from "./UIText";
 
 export function DistanceToGoal() {
 	const [distanceTraveled] = useAtom(shipAtom.distanceTraveled);

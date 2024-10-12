@@ -6,10 +6,11 @@ import { Texture } from "pixi.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 
-import { config } from "../../config";
-import { shipAtom } from "../../atoms/ship.atom";
-import { range } from "../../utils/range";
 import { Hitbox } from "./Hitbox";
+
+import { range } from "utils/range";
+import { shipAtom } from "atoms/ship.atom";
+import { config } from "config";
 
 interface Props {
 	name: string;

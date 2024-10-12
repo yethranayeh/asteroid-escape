@@ -3,8 +3,8 @@ import { BlurFilter } from "pixi.js";
 import { useMemo, useState } from "react";
 import { useAtom } from "jotai";
 
-import { config } from "../config";
-import { shipAtom } from "../atoms/ship.atom";
+import { config } from "config";
+import { shipAtom } from "atoms/ship.atom";
 
 export function Background() {
 	const [y, setY] = useState(512 / 2);

@@ -1,10 +1,12 @@
 import { Container, useTick } from "@pixi/react";
-import { Asteroid } from "./Asteroid";
 import { useCallback, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { gameAtom } from "../../atoms/game.atom";
-import { uuidv4 } from "../../utils/uuidv4";
-import { getRandomXLocation } from "../../utils/getRandomXLocation";
+
+import { uuidv4 } from "utils/uuidv4";
+import { getRandomXLocation } from "utils/getRandomXLocation";
+import { gameAtom } from "atoms/game.atom";
+
+import { Asteroid } from "./Asteroid";
 
 interface XLocation {
 	id: string;

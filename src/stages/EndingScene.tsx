@@ -4,10 +4,10 @@ import { TextStyle } from "pixi.js";
 import { Spring } from "react-spring";
 import { useState } from "react";
 
-import { ShipPure } from "../components/Ship/ShipPure";
-import { Planet } from "../components/Planet";
+import { ShipPure } from "components/Ship/ShipPure";
+import { Planet } from "components/Planet";
 
-import { config } from "../config";
+import { config } from "config";
 
 const style = new TextStyle({
 	fontFamily: "monospace",

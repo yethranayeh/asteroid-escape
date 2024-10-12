@@ -3,9 +3,9 @@ import { Texture } from "pixi.js";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 
-import { gameAtom } from "../../../atoms/game.atom";
-import { shipAtom } from "../../../atoms/ship.atom";
-import { config } from "../../../config";
+import { gameAtom } from "atoms/game.atom";
+import { shipAtom } from "atoms/ship.atom";
+import { config } from "config";
 
 const variants = ["base", "hover"];
 export function PlayButton() {

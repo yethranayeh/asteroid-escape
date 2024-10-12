@@ -3,9 +3,10 @@ import { useAtom } from "jotai";
 import { Graphics, Texture } from "pixi.js";
 import { useMemo } from "react";
 
-import { shipAtom } from "../../../atoms/ship.atom";
-import { UIText } from "../text/UIText";
-import { config } from "../../../config";
+import { shipAtom } from "atoms/ship.atom";
+import { config } from "config";
+
+import { UIText } from "components/ui/text/UIText";
 
 export function Health() {
 	const [health] = useAtom(shipAtom.health);

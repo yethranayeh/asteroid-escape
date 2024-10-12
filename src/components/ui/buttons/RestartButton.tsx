@@ -1,12 +1,12 @@
 import { Sprite } from "@pixi/react";
+import { Texture } from "pixi.js";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 
-import { gameAtom } from "../../../atoms/game.atom";
-import { uuidv4 } from "../../../utils/uuidv4";
-import { config } from "../../../config";
-import { shipAtom } from "../../../atoms/ship.atom";
-import { Texture } from "pixi.js";
+import { gameAtom } from "atoms/game.atom";
+import { uuidv4 } from "utils/uuidv4";
+import { config } from "config";
+import { shipAtom } from "atoms/ship.atom";
 
 const variants = ["base", "hover"];
 export function RestartButton() {

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import { Text } from "@pixi/react";
 import { TextStyle } from "pixi.js";
-import { config } from "../../config";
 import { Container } from "@pixi/react-animated";
+import { useEffect, useState } from "react";
 import { Spring } from "react-spring";
+
+import { config } from "config";
 
 const style = new TextStyle({
 	fontFamily: config.fonts,

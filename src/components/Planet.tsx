@@ -1,8 +1,9 @@
 import { AnimatedSprite } from "@pixi/react";
 import { Resource, Texture } from "pixi.js";
 import { useEffect, useState } from "react";
-import { range } from "../utils/range";
-import { config } from "../config";
+
+import { range } from "utils/range";
+import { config } from "config";
 
 export function Planet() {
 	const [frames, setFrames] = useState<Array<Texture<Resource>>>([]);

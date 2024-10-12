@@ -3,10 +3,10 @@ import { Resource, Texture } from "pixi.js";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 
-import { range } from "../../utils/range";
-import { gameAtom } from "../../atoms/game.atom";
-import { shipAtom } from "../../atoms/ship.atom";
-import { config } from "../../config";
+import { range } from "utils/range";
+import { gameAtom } from "atoms/game.atom";
+import { shipAtom } from "atoms/ship.atom";
+import { config } from "config";
 
 export function Engine() {
 	const [idleFrames, setIdleFrames] = useState<Array<Texture<Resource>>>([]);

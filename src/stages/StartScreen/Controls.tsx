@@ -1,9 +1,10 @@
 import { Container } from "@pixi/react-animated";
 import { Spring } from "react-spring";
 
+import { config } from "config";
+
 import { KeyboardControls } from "./KeyboardControls";
-import { PlayButton } from "../../components/ui/buttons/PlayButton";
-import { config } from "../../config";
+import { PlayButton } from "components/ui/buttons/PlayButton";
 
 export const Controls = () => (
 	<Spring

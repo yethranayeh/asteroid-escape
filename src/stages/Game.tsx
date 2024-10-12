@@ -1,16 +1,16 @@
 import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 
+import { shipAtom } from "atoms/ship.atom";
+import { gameAtom } from "atoms/game.atom";
+
 import { Scene } from "./Scene";
 import { EndingScene } from "./EndingScene";
 
-import { RestartButton } from "../components/ui/buttons/RestartButton";
-import { GameOver } from "../components/ui/text/GameOver";
-import { UI } from "../components/ui/UI";
-import { UIText } from "../components/ui/text/UIText";
-
-import { shipAtom } from "../atoms/ship.atom";
-import { gameAtom } from "../atoms/game.atom";
+import { RestartButton } from "components/ui/buttons/RestartButton";
+import { GameOver } from "components/ui/text/GameOver";
+import { UI } from "components/ui/UI";
+import { UIText } from "components/ui/text/UIText";
 
 export function Game() {
 	const [isGameOver] = useAtom(gameAtom.isOver);

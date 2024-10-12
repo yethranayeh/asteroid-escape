@@ -1,7 +1,8 @@
 import { useTick, Text } from "@pixi/react";
-import { useState } from "react";
-import { config } from "../../config";
 import { TextStyle } from "pixi.js";
+import { useState } from "react";
+
+import { config } from "config";
 
 export function Title() {
 	const [spacing, setSpacing] = useState(4);

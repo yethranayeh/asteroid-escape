@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 
-import { shipAtom } from "../../../atoms/ship.atom";
+import { shipAtom } from "atoms/ship.atom";
+
 import { UIText } from "./UIText";
 
 export function Info() {

@@ -2,9 +2,9 @@ import { Sprite, useTick } from "@pixi/react";
 import { useState } from "react";
 import { useAtom } from "jotai";
 
-import { getRandomXLocation } from "../utils/getRandomXLocation";
-import { shipAtom } from "../atoms/ship.atom";
-import { config } from "../config";
+import { getRandomXLocation } from "utils/getRandomXLocation";
+import { shipAtom } from "atoms/ship.atom";
+import { config } from "config";
 
 export function ShieldPickup() {
 	const [isShielded] = useAtom(shipAtom.shield);

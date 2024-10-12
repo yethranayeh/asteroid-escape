@@ -1,12 +1,11 @@
 import { useTick } from "@pixi/react";
-
 import { forwardRef, useCallback, useEffect, useState } from "react";
-import { useAtom } from "jotai";
 import { Spring } from "react-spring";
+import { useAtom } from "jotai";
 
-import { config } from "../../config";
-import { gameAtom } from "../../atoms/game.atom";
-import { shipAtom } from "../../atoms/ship.atom";
+import { config } from "config";
+import { gameAtom } from "atoms/game.atom";
+import { shipAtom } from "atoms/ship.atom";
 import { getDistanceTraveled } from "./utils/getDistanceTraveled";
 
 import { ShipPure } from "./ShipPure";
@@ -51,7 +50,7 @@ export const Ship = forwardRef(({ destroyed }: { destroyed: boolean }, ref: any)
 				setTravelSpeed(1);
 			}
 		},
-		[x, setX, destroyed, isGameOver]
+		[destroyed, isGameOver]
 	);
 
 	useEffect(() => {

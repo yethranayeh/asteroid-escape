@@ -1,7 +1,8 @@
 import { Sprite } from "@pixi/react";
 import { useAtom } from "jotai";
-import { shipAtom } from "../../atoms/ship.atom";
-import { config } from "../../config";
+
+import { shipAtom } from "atoms/ship.atom";
+import { config } from "config";
 
 function getHullName(hp: number) {
 	if (hp <= 0) {

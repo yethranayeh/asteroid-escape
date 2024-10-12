@@ -1,6 +1,7 @@
 import { Container, Sprite, Text } from "@pixi/react";
-import { config } from "../../config";
 import { TextStyle } from "pixi.js";
+
+import { config } from "config";
 
 const style = new TextStyle({
 	fontFamily: "monospace",

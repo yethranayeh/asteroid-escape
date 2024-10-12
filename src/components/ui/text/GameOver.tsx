@@ -1,6 +1,7 @@
 import { TextStyle } from "pixi.js";
 import { Text } from "@pixi/react";
-import { config } from "../../../config";
+
+import { config } from "config";
 
 const style = new TextStyle({
 	fontFamily: config.fonts,
